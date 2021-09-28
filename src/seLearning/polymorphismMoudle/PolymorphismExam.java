@@ -1,4 +1,4 @@
-package seLearning.PolymorphismMoudle;
+package seLearning.polymorphismMoudle;
 
 /**
  * 被引用对象的类型而不是引用变量的类型决定了调用谁的成员方法，
@@ -37,6 +37,8 @@ class D extends B{
 
 public class PolymorphismExam {
     public static void main(String[] args) {
+
+        StringBuilder stringBuffer = new StringBuilder();
         A a1 = new A();
         A a2 = new B();
         B b = new B();

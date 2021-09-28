@@ -1,4 +1,4 @@
-package seLearning.PolymorphismMoudle;
+package seLearning.polymorphismMoudle;
 
 // 利用接口实现多态
 

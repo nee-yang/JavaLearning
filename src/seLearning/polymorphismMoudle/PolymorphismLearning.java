@@ -1,4 +1,4 @@
-package seLearning.PolymorphismMoudle;
+package seLearning.polymorphismMoudle;
 
 
 class Wine {
@@ -14,6 +14,7 @@ class Wine {
     }
 
     public Wine(){
+        System.out.println("wine has been called!");
     }
 
     public String drink(){
@@ -40,6 +41,7 @@ class Wine {
 class JNC extends Wine {
 
     public JNC(){
+        System.out.println("JNC has been called!");
         setName("JNC");
     }
 
@@ -74,6 +76,8 @@ class JNC extends Wine {
 
 class JGJ extends Wine{
     public JGJ(){
+
+        System.out.println("JGJ has been called!");
         setName("JGJ");
     }
 
