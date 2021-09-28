@@ -37,6 +37,8 @@ class D extends B{
 
 public class PolymorphismExam {
     public static void main(String[] args) {
+
+        StringBuilder stringBuffer = new StringBuilder();
         A a1 = new A();
         A a2 = new B();
         B b = new B();
