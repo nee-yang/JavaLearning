@@ -1,5 +1,6 @@
 package seLearning;
 
+// 利用接口实现多态
 
 interface Car {
     String getName();
