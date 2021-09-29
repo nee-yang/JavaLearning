@@ -1,4 +1,4 @@
-package seLearning.stringRelated;
+package seLearning.StringRelated;
 
 public class StringVariable {
     public static void main(String[] args) {
