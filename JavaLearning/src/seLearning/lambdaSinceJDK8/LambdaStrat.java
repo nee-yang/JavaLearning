@@ -1,10 +1,14 @@
 package seLearning.lambdaSinceJDK8;
 
 
+import com.sun.tools.javac.Main;
+
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * java8引入了Lambda表达式：
@@ -45,7 +49,18 @@ class Person {
         this.firstName = firstName;
         this.secondName = secondName;
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                '}';
+    }
 }
+
+
+
 
 //定义一个工厂接口，用来生成 Person 类：
 interface PersonFactory<P extends Person> {
@@ -158,16 +173,83 @@ public class LambdaStrat {
         /* [3]supplier
         不同于Function，不接受入参，直接为我们制定一个生产的结果，有点像生产者模式
          */
+        Supplier<Person> personSupplier = Person::new;
+        Person person1 = personSupplier.get();
+        System.out.println(person1.toString());
+
+        System.out.println("--------------Consumer消费者--------------");
+        /* [4]Comsumer消费者
+        需要提供入参用来被消费
+         */
+        Consumer<Person> greeter = (p) -> System.out.println("Hello, " + p.firstName);
+        greeter.accept(new Person("f", "fg"));
+
+        System.out.println("--------------Comparator--------------");
+        /*
+        **[5]Comparator
+        *   比较器
+         */
+        Comparator<Person> comparator = (p1, p2) -> p1.firstName.compareTo(p2.firstName);
+        Person p1 = new Person("df", "dff");
+        Person p2 = new Person("gf", "fff");
+        System.out.println(comparator.compare(p1, p2));
+        System.out.println(comparator.reversed().compare(p1, p2));
+
+
+        System.out.println("--------------Optional--------------");
+        /*
+         **[6]Optional
+         *   并不是一个函数式接口，设计它的目的是为了防止空指针异常
+         *  可以把它看作包装非空或空的对象的容器，当你定义一个方法，其返回对象可能为空，也可能不为空的时候就可以用optional包装
+         *  这是在Java8中推荐的用法
+         */
+        /**
+         * Optional的扩展
+         */
+        // 【1】创建
+        // 1⃣️ 创建一个空的Optional实例
+        Optional<String> emptyOptional = Optional.empty();
+        String name = "java";
+        /* 2⃣️
+        返回特定的非空值的optional()，但此静态方法需要一个非null参数，否则引发空指针异常
+        因此若不知道参数是不是null，那就使用接下来的ofNullable方法
+         */
+        Optional<String> dataOptional = Optional.of(name);
+        // 3⃣️ 返回描述指定值的Optional，若空则返回空值，即一个空的Optional对象，不会抛出异常
+        Optional<String> mayNULlOptional = Optional.ofNullable(getName());
+        System.out.println(mayNULlOptional.isPresent());
+
+        // [2] 使用
+        Optional<String> optionalS = Optional.of("bam");
+        // 存在值返回true，否则返回false
+        System.out.println(optionalS.isPresent());
+        System.out.println(optionalS.isEmpty());
+        // 存在值则返回该值，否则抛出异常，因此需要在前面加一层.isPresent()判断。在引发异常后需要orElse紧急救援
+        System.out.println(optionalS.get());
+        System.out.println(optionalS.orElse("fallback"));
+        System.out.println(emptyOptional.orElse("default"));
+        // ifpresent函数
+        /*
+        如果存在值则使用该值调用指定的使用者，否则什么都不做
+        public void ifPresent(Consumer<? super T> action) {
+        if (value != null) {
+            action.accept(value);
+        } }
+         */
+        optionalS.ifPresent((s) -> System.out.println(s.charAt(0)));
+
+        /* 【3】何时使用
+        Optional的预期用途主要是作为返回类型。获取此类型的实例后，可以提取该值（如果存在）或提供其他行为（如果不存在）
+        Optional类的一个非常有用的用例是将其与流或返回Optional值以构建流畅的API的其他方法结合。
+        如： //User user = users.stream().findFirst().orElse(new User("default", "1234"));
+         */
 
 
 
+    }
 
-
-
-
-
-
-
-
+    private static String getName() {
+        String name = "java";
+        return (name.length() > 5 ? name : null);
     }
 }
