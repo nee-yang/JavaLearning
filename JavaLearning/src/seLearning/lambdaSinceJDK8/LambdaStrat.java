@@ -3,6 +3,8 @@ package seLearning.lambdaSinceJDK8;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * java8引入了Lambda表达式：
@@ -15,8 +17,7 @@ import java.util.*;
  *         2⃣️ 类的方法引用
  *         3⃣️ 类的构造器引用
  *
- *  【2】  Lambda 访问外部变量及接口默认方法
- *          包括：局部变量，成员变量，静态变量，接口的默认方法
+ *  【2】  内置的函数式接口
  */
 
 
@@ -103,12 +104,66 @@ public class LambdaStrat {
         Person person = personPersonFactory.create("s", "df");
 
 
-
+        System.out.println("--------------内置的函数式接口--------------");
         /**
-         * 【2】Lambda 访问外部变量及接口默认方法
+         * 【2】内置的函数式接口
          */
 
-        // 1⃣️ 访问局部变量
+
+        System.out.println("--------------predicate断言--------------");
+        /* [1]predicate断言
+        可指定入参类型，并返回boolean值的函数式接口，内部提供了了一些带有默认实现的方法
+         */
+        Predicate<String> predicate = (str) -> str.length() > 0;
+        System.out.println(predicate.test("df"));
+        System.out.println(predicate.negate().test("df"));
+        Predicate<Boolean> nonNull = Objects::nonNull;
+        Predicate<Boolean> isNull = Objects::isNull;
+        Predicate<Integer> integerPredicate = (num) -> num >= 0;
+        System.out.println(integerPredicate.test(33));
+
+        System.out.println("--------------Function--------------");
+        /* [2]Function
+        为其提供一个原料，它会生产一个最终的产品。通过它提供的默认方法，组合，链形处理（compose，andThen）
+        是根据输入的参数对象做一些额外的判定、计算处理，返回另外一个指定的对象R
+         */
+        // 第一个参数为传入类型，第二个参数为传出类型
+        // 这是一个简单的Lambda FUnction
+        Function<String, Integer> toInteger = Integer::valueOf;
+        Function<String, String> backString = toInteger.andThen(String::valueOf);
+        System.out.println(backString.apply("234"));
+        // 复杂的应用
+        Function<Integer, Integer> doubleNum = e -> e * 2;
+        Function<Integer, Integer> square = e -> e * e;
+        /*
+        ** andThen()
+        *  返回一个先执行当前函数对象apply方法再执行after对象函数对象apply方法的函数对象
+        *  default <V> Function<T, V> andThen(Function<? super R, ? extends V> after) {
+        Objects.requireNonNull(after);
+        return (T t) -> after.apply(apply(t)); }
+         */
+        System.out.println(doubleNum.andThen(square).apply(2));
+
+
+        /*
+        ** compose()
+        *  返回一个先执行before函数对象apply方法再执行当前h函数对象apply方法的函数对象
+        *    default <V> Function<V, R> compose(Function<? super V, ? extends T> before) {
+        Objects.requireNonNull(before);
+        return (V v) -> apply(before.apply(v));}
+         */
+        System.out.println(doubleNum.compose(square).apply(2));
+
+        System.out.println("--------------Supplier生产者--------------");
+        /* [3]supplier
+        不同于Function，不接受入参，直接为我们制定一个生产的结果，有点像生产者模式
+         */
+
+
+
+
+
+
 
 
 
