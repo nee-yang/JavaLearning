@@ -2,6 +2,8 @@ package seLearning.collectionsLearning;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Java中的集合包括三大类，它们是Set（集）、List（列表）和Map（映射），它们都处于java.util包中，
@@ -24,6 +26,17 @@ public class CollectionLearning {
         Hashtable<String, String> hashtable = new Hashtable<>();
         HashSet<String> set = new HashSet<>();
 
+        ConcurrentLinkedQueue stringLinkedList = new ConcurrentLinkedQueue<>();
+        stringLinkedList.add("xf");
+        stringLinkedList.add(34);
+        stringLinkedList.add(34);
+        stringLinkedList.stream().forEach(System.out::println);
+
+        ConcurrentLinkedDeque d = new ConcurrentLinkedDeque();
+        d.add("fsdf");
+        d.add(-1);
+        d.add(-1);
+        d.stream().forEach(System.out::println);
 
 
 
@@ -55,12 +68,6 @@ public class CollectionLearning {
         ConcurrentHashMap<String, Integer> concurrentHashMap = new ConcurrentHashMap<>();
         LinkedHashMap<String, Integer> linkedHashMap = new LinkedHashMap<>();
 
-
-
-        int[] n = new int[3];
-        int[] table = n;
-        n[1] = 2;
-        System.out.println(table[1] + "   ss");
 
 
 
