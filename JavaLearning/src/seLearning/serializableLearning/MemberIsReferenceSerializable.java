@@ -1,6 +1,8 @@
 package seLearning.serializableLearning;
 
 
+import seLearning.reflectLearning.ReflectTest;
+
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -31,6 +33,9 @@ class People {
 
 
 public class MemberIsReferenceSerializable implements Serializable {
+
+
+    ReflectTest reflectTest = new ReflectTest();
 
     private String name;
     private People people;
